@@ -52,7 +52,8 @@ public class Inventory {
 	}
 
 	private static void QtoICheck() {
-		for (Iterator<Item> iIterator = inv.iterator(); iIterator.hasNext();) {
+		ArrayList<Item> invTemp = new ArrayList<Item>(inv);
+		for (Iterator<Item> iIterator = invTemp.iterator(); iIterator.hasNext();) {
 			Item i = iIterator.next();
 			if (i instanceof QuantifiedItem) {
 				if (((QuantifiedItem) i).getQuantity() == 1) {
@@ -63,6 +64,7 @@ public class Inventory {
 				}
 			}
 		}
+		inv = new ArrayList<Item>(invTemp);
 	}
 
 	public static boolean checkAndRemove(Item i) {
@@ -175,5 +177,9 @@ public class Inventory {
 
 	public static void print() {
 		System.out.println(inv);
+	}
+
+	public static ArrayList<Item> getArray() {
+		return inv;
 	}
 }

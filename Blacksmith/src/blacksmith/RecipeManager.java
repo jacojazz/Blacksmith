@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RecipeManager {
-	static void furnace(ItemType ITEM_TYPE) {
+	public static void furnace(ItemType ITEM_TYPE) {
 		switch (ITEM_TYPE) {
 		case ADAMANTITEBAR:
 			if (Inventory.checkAndRemove(new Item(ItemType.ADAMANTITEORE))) {
@@ -26,12 +26,6 @@ public class RecipeManager {
 			}
 		case COPPERBAR:
 			if (Inventory.checkAndRemove(new Item(ItemType.COPPERORE))) {
-				break;
-			} else {
-				return;
-			}
-		case DIAMOND:
-			if (Inventory.checkAndRemove(new Item(ItemType.DIAMONDORE))) {
 				break;
 			} else {
 				return;
@@ -96,30 +90,101 @@ public class RecipeManager {
 	public static void anvil(ItemType ITEM_TYPE, ItemTier ITEM_TIER) {
 		switch (ITEM_TYPE) {
 		case ARROW:
-			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new Item(ItemType.STRING))))) {
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new Item(ItemType.FLINT))))) {
 				break;
 			} else {
 				return;
 			}
 		case BATTLEAXE:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new QuantifiedItem(ITEM_TIER.getResource(), 4))))) {
+				break;
+			} else {
+				return;
+			}
 		case BOOTS:
+			if (Inventory.checkAndRemove(new QuantifiedItem(ITEM_TIER.getResource(), 2))) {
+				break;
+			} else {
+				return;
+			}
 		case BOW:
+			if (Inventory.checkAndRemove(new QuantifiedItem(ITEM_TIER.getResource(), 3))) {
+				break;
+			} else {
+				return;
+			}
 		case BREASTPLATE:
+			if (Inventory.checkAndRemove(new QuantifiedItem(ITEM_TIER.getResource(), 4))) {
+				break;
+			} else {
+				return;
+			}
 		case BROADSWORD:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new QuantifiedItem(ITEM_TIER.getResource(), 4))))) {
+				break;
+			} else {
+				return;
+			}
 		case DAGGER:
 			if (Inventory.checkAndRemove(new Item(ITEM_TIER.getResource()))) {
 				break;
 			} else {
 				return;
 			}
+		case DIAMOND:
+			if (Inventory.checkAndRemove(new Item(ItemType.DIAMONDORE))) {
+				break;
+			} else {
+				return;
+			}
 		case HAMMER:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new QuantifiedItem(ITEM_TIER.getResource(), 6))))) {
+				break;
+			} else {
+				return;
+			}
 		case HATCHET:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new QuantifiedItem(ITEM_TIER.getResource(), 2))))) {
+				break;
+			} else {
+				return;
+			}
 		case HELMET:
+			if (Inventory.checkAndRemove(new QuantifiedItem(ITEM_TIER.getResource(), 2))) {
+				break;
+			} else {
+				return;
+			}
 		case LEGGINGS:
+			if (Inventory.checkAndRemove(new QuantifiedItem(ITEM_TIER.getResource(), 4))) {
+				break;
+			} else {
+				return;
+			}
 		case LONGSWORD:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new QuantifiedItem(ITEM_TIER.getResource(), 3))))) {
+				break;
+			} else {
+				return;
+			}
 		case SHIELD:
+			if (Inventory.checkAndRemove(new QuantifiedItem(ITEM_TIER.getResource(), 5))) {
+				break;
+			} else {
+				return;
+			}
 		case SHORTSWORD:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new QuantifiedItem(ITEM_TIER.getResource(), 2))))) {
+				break;
+			} else {
+				return;
+			}
 		case SPEAR:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new QuantifiedItem(ItemType.LOG, 3), new Item(ITEM_TIER.getResource()))))) {
+				break;
+			} else {
+				return;
+			}
 		default:
 			System.err.println(Messages.getString("RecipeManager.anvil.switch"));
 			return;

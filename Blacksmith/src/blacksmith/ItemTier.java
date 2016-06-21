@@ -1,8 +1,6 @@
 package blacksmith;
 
 public enum ItemTier {
-	// IN ORDER, DON'T SORT
-
 	NONE(ItemType.NONE),
 	WOODEN(ItemType.LOG),
 	STONE(ItemType.STONE),

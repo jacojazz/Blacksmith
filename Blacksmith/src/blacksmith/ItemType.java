@@ -29,6 +29,7 @@ public enum ItemType {
 	STONE("Stone", ItemGroup.SUPPLIES),
 	STRING("String", ItemGroup.SUPPLIES),
 	FEATHER("Feather", ItemGroup.SUPPLIES),
+	FLINT("Flint", ItemGroup.SUPPLIES),
 
 	// ORE
 	ADAMANTITEORE("Adamantite Ore", ItemGroup.ORE),

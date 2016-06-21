@@ -49,6 +49,10 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return ITEM_TYPE.getFormattedName();
+		if (ITEM_TIER != ItemTier.NONE) {
+			return ITEM_TYPE.getFormattedName() + " (" + ITEM_TIER.getResource().getFormattedName() + ")";
+		} else {
+			return ITEM_TYPE.getFormattedName();
+		}
 	}
 }
