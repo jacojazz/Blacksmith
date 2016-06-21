@@ -8,6 +8,10 @@ public class Item {
 	private ItemTier ITEM_TIER;
 	private ItemState ITEM_STATE;
 
+	Item(ItemType ITEM_TYPE) {
+		this(ITEM_TYPE, ItemTier.NONE, ItemState.NONE);
+	}
+
 	Item(ItemType ITEM_TYPE, ItemTier ITEM_TIER, ItemState ITEM_STATE) {
 		this.ID = UUID.randomUUID();
 		this.ITEM_TYPE = ITEM_TYPE;
@@ -33,6 +37,14 @@ public class Item {
 
 	public void setState(ItemState iTEM_STATE) {
 		ITEM_STATE = iTEM_STATE;
+	}
+
+	public boolean itemCompare(Item i) {
+		if (i.getType().equals(ITEM_TYPE) && i.getTier().equals(ITEM_TIER) && i.getState().equals(ITEM_STATE)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

@@ -1,58 +1,67 @@
 package blacksmith;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class RecipeManager {
 	static void furnace(ItemType ITEM_TYPE) {
 		switch (ITEM_TYPE) {
 		case ADAMANTITEBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.ADAMANTITEORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.ADAMANTITEORE))) {
+				break;
+			} else {
+				return;
+			}
+		case BRONZEBAR:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.COPPERORE), new Item(ItemType.TINORE))))) {
 				break;
 			} else {
 				return;
 			}
 		case COBALTBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.COBALTORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.COBALTORE))) {
 				break;
 			} else {
 				return;
 			}
 		case COPPERBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.COPPERORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.COPPERORE))) {
 				break;
 			} else {
 				return;
 			}
 		case DIAMOND:
-			if (Inventory.checkAndRemove(new Item(ItemType.DIAMONDORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.DIAMONDORE))) {
 				break;
 			} else {
 				return;
 			}
 		case GOLDBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.GOLDORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.GOLDORE))) {
 				break;
 			} else {
 				return;
 			}
 		case HELLSTONEBAR:
-			break;
+			return;
 		case IRONBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.IRONORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.IRONORE))) {
 				break;
 			} else {
 				return;
 			}
 		case LEGENDARIUMBAR:
-			break;
+			return;
 		case MITHRILBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.MITHRILORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.MITHRILORE))) {
 				break;
 			} else {
 				return;
 			}
 		case MUSTACHIUMBAR:
-			break;
+			return;
 		case SILVERBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.SILVERORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.SILVERORE))) {
 				break;
 			} else {
 				return;
@@ -60,19 +69,20 @@ public class RecipeManager {
 		case STEELBAR:
 			return;
 		case TINBAR:
-			if (Inventory.checkAndRemove(new Item(ItemType.TINORE, ItemTier.NONE, ItemState.NONE))) {
+			if (Inventory.checkAndRemove(new Item(ItemType.TINORE))) {
 				break;
 			} else {
 				return;
 			}
 		case UNOBTANIUMBAR:
-			break;
+			return;
 		case XENOTINEBAR:
-			break;
+			return;
 		default:
 			System.err.println("Smelting Error: FURNACE SWITCH");
 			return;
 		}
-		Inventory.add(new Item(ITEM_TYPE, ItemTier.NONE, ItemState.NONE));
+		System.out.println("Smelting Notice: SMELT COMPLETED");
+		Inventory.add(new Item(ITEM_TYPE));
 	}
 }
