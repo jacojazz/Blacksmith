@@ -43,7 +43,11 @@ public class RecipeManager {
 				return;
 			}
 		case HELLSTONEBAR:
-			return;
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new QuantifiedItem(ItemType.STEELBAR, 5), new QuantifiedItem(ItemType.IRONBAR, 5))))) {
+				break;
+			} else {
+				return;
+			}
 		case IRONBAR:
 			if (Inventory.checkAndRemove(new Item(ItemType.IRONORE))) {
 				break;
@@ -67,7 +71,11 @@ public class RecipeManager {
 				return;
 			}
 		case STEELBAR:
-			return;
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.IRONBAR), new Item(ItemType.COAL))))) {
+				break;
+			} else {
+				return;
+			}
 		case TINBAR:
 			if (Inventory.checkAndRemove(new Item(ItemType.TINORE))) {
 				break;
@@ -79,10 +87,9 @@ public class RecipeManager {
 		case XENOTINEBAR:
 			return;
 		default:
-			System.err.println("Smelting Error: FURNACE SWITCH");
+			System.err.println(Messages.getString("RecipeManager.furnace.switch"));
 			return;
 		}
-		System.out.println("Smelting Notice: SMELT COMPLETED");
 		Inventory.add(new Item(ITEM_TYPE));
 	}
 }

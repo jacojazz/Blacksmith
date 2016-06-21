@@ -86,6 +86,19 @@ public class Inventory {
 	public static boolean checkAndRemove(ArrayList<Item> iList) {
 		QtoICheck();
 		ArrayList<Item> invTemp = new ArrayList<Item>(inv);
+
+		for (Item iLi : iList) {
+			boolean exists = false;
+			for (Item iI : invTemp) {
+				if (iLi.itemCompare(iI)) {
+					exists = true;
+				}
+			}
+			if (!exists) {
+				return false;
+			}
+		}
+
 		for (Iterator<Item> invIterator = invTemp.iterator(); invIterator.hasNext();) {
 			Item invI = invIterator.next();
 			for (Iterator<Item> iIterator = iList.iterator(); iIterator.hasNext();) {
@@ -95,36 +108,43 @@ public class Inventory {
 						if (invI instanceof QuantifiedItem) {
 							if (((QuantifiedItem) invI).getQuantity() > ((QuantifiedItem) i).getQuantity()) {
 								((QuantifiedItem) invI).setQuantity(((QuantifiedItem) invI).getQuantity() - ((QuantifiedItem) i).getQuantity());
+								iIterator.remove();
 								if (((QuantifiedItem) invI).getQuantity() < 1) {
-									invTemp.remove(invI);
+									invIterator.remove();
 								}
 							} else if (((QuantifiedItem) invI).getQuantity() == ((QuantifiedItem) i).getQuantity()) {
-								invTemp.remove(invI);
-							} else {
-								return false;
+								invIterator.remove();
+								iIterator.remove();
 							}
 						} else {
 							if (((QuantifiedItem) i).getQuantity() > 1) {
 								return false;
 							} else {
-								invTemp.remove(invI);
+								invIterator.remove();
+								iIterator.remove();
 							}
 						}
 					} else {
 						if (invI instanceof QuantifiedItem) {
 							((QuantifiedItem) invI).setQuantity(((QuantifiedItem) invI).getQuantity() - 1);
+							iIterator.remove();
 							if (((QuantifiedItem) invI).getQuantity() < 1) {
-								invTemp.remove(invI);
+								invIterator.remove();
 							}
 						} else {
-							invTemp.remove(invI);
+							invIterator.remove();
+							iIterator.remove();
 						}
 					}
 				}
 			}
 		}
-		inv = invTemp;
-		return true;
+		if (iList.isEmpty()) {
+			inv = invTemp;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public static void print() {
