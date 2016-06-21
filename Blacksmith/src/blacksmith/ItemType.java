@@ -28,6 +28,7 @@ public enum ItemType {
 	LOG("Log", ItemGroup.SUPPLIES),
 	STONE("Stone", ItemGroup.SUPPLIES),
 	STRING("String", ItemGroup.SUPPLIES),
+	FEATHER("Feather", ItemGroup.SUPPLIES),
 
 	// ORE
 	ADAMANTITEORE("Adamantite Ore", ItemGroup.ORE),

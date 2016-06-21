@@ -22,6 +22,32 @@ public class Inventory {
 	}
 
 	public static void add(Item i) {
+		if (inv.isEmpty()) {
+			inv.add(i);
+			return;
+		}
+
+		for (Iterator<Item> iIterator = inv.iterator(); iIterator.hasNext();) {
+			Item invI = iIterator.next();
+			if (invI.itemCompare(i)) {
+				if (invI instanceof QuantifiedItem) {
+					if (i instanceof QuantifiedItem) {
+						((QuantifiedItem) invI).setQuantity(((QuantifiedItem) invI).getQuantity() + ((QuantifiedItem) i).getQuantity());
+					} else {
+						((QuantifiedItem) invI).setQuantity(((QuantifiedItem) invI).getQuantity() + 1);
+					}
+				} else {
+					if (i instanceof QuantifiedItem) {
+						inv.add(new QuantifiedItem(invI.getType(), invI.getTier(), invI.getState(), ((QuantifiedItem) i).getQuantity() + 1));
+						inv.remove(invI);
+					} else {
+						inv.add(new QuantifiedItem(invI.getType(), invI.getTier(), invI.getState(), 2));
+						inv.remove(invI);
+					}
+				}
+				return;
+			}
+		}
 		inv.add(i);
 	}
 
@@ -148,6 +174,6 @@ public class Inventory {
 	}
 
 	public static void print() {
-		System.out.println(inv.toString());
+		System.out.println(inv);
 	}
 }

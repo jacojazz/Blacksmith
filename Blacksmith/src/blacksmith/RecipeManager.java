@@ -43,7 +43,7 @@ public class RecipeManager {
 				return;
 			}
 		case HELLSTONEBAR:
-			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new QuantifiedItem(ItemType.STEELBAR, 5), new QuantifiedItem(ItemType.IRONBAR, 5))))) {
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new QuantifiedItem(ItemType.STEELBAR, 5), new QuantifiedItem(ItemType.IRONBAR, 5), new QuantifiedItem(ItemType.STONE, 2))))) {
 				break;
 			} else {
 				return;
@@ -91,5 +91,39 @@ public class RecipeManager {
 			return;
 		}
 		Inventory.add(new Item(ITEM_TYPE));
+	}
+
+	public static void anvil(ItemType ITEM_TYPE, ItemTier ITEM_TIER) {
+		switch (ITEM_TYPE) {
+		case ARROW:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.LOG), new Item(ItemType.STRING))))) {
+				break;
+			} else {
+				return;
+			}
+		case BATTLEAXE:
+		case BOOTS:
+		case BOW:
+		case BREASTPLATE:
+		case BROADSWORD:
+		case DAGGER:
+			if (Inventory.checkAndRemove(new Item(ITEM_TIER.getResource()))) {
+				break;
+			} else {
+				return;
+			}
+		case HAMMER:
+		case HATCHET:
+		case HELMET:
+		case LEGGINGS:
+		case LONGSWORD:
+		case SHIELD:
+		case SHORTSWORD:
+		case SPEAR:
+		default:
+			System.err.println(Messages.getString("RecipeManager.anvil.switch"));
+			return;
+		}
+		Inventory.add(new Item(ITEM_TYPE, ITEM_TIER, ItemState.UNFINISHED));
 	}
 }
