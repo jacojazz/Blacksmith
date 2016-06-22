@@ -212,6 +212,24 @@ public class RecipeManager {
 			} else {
 				return;
 			}
+		case EMERALD:
+			if (Inventory.checkAndRemove(new Item(ItemType.EMERALDORE))) {
+				break;
+			} else {
+				return;
+			}
+		case RUBY:
+			if (Inventory.checkAndRemove(new Item(ItemType.RUBYORE))) {
+				break;
+			} else {
+				return;
+			}
+		case SAPPHIRE:
+			if (Inventory.checkAndRemove(new Item(ItemType.SAPPHIREORE))) {
+				break;
+			} else {
+				return;
+			}
 		case COPPERWIRE:
 			if (Inventory.checkAndRemove(new Item(ItemType.COPPERBAR))) {
 				break;
