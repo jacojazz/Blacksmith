@@ -19,12 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import javax.swing.Box;
 
 public class GUITest extends JFrame {
 
-	private static final long serialVersionUID = -3052233891102198079L;
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
@@ -49,28 +50,17 @@ public class GUITest extends JFrame {
 			e1.printStackTrace();
 		}
 		setBounds(100, 100, 640, 480);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
+			e1.printStackTrace();
+		}
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		final JList<Item> invDisplay = new JList<Item>();
-		invDisplay.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					JPopupMenu menu = new JPopupMenu();
-					JMenuItem item = new JMenuItem("Remove from Inv");
-					item.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							Inventory.checkAndRemove((Item) invDisplay.getSelectedValue());
-							updateInv(invDisplay);
-						}
-					});
-					menu.add(item);
-					menu.show(GUITest.this, 5, invDisplay.getCellBounds(invDisplay.getSelectedIndex() + 1, invDisplay.getSelectedIndex() + 1).y);
-				}
-			}
-		});
 		invDisplay.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		invDisplay.setListData(Inventory.getArray().toArray(new Item[Inventory.getArray().size()]));
 		invDisplay.setBounds(10, 13, 200, 417);
@@ -79,7 +69,6 @@ public class GUITest extends JFrame {
 		JPopupMenu popupMenu = new JPopupMenu();
 		JMenuItem removeInv = new JMenuItem("Remove from Inv");
 		removeInv.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				Inventory.checkAndRemove(invDisplay.getSelectedValue());
 				updateInv(invDisplay);
@@ -126,15 +115,34 @@ public class GUITest extends JFrame {
 		anvilTierCombo.setBounds(145, 12, 125, 20);
 		anvilPanel.add(anvilTierCombo);
 
-		JButton craftButton = new JButton("Craft");
-		craftButton.addActionListener(new ActionListener() {
+		JButton forgeButton = new JButton("Forge");
+		forgeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RecipeManager.anvil(anvilTypeCombo.getItemAt(anvilTypeCombo.getSelectedIndex()), anvilTierCombo.getItemAt(anvilTierCombo.getSelectedIndex()));
 				updateInv(invDisplay);
 			}
 		});
+		forgeButton.setBounds(290, 11, 89, 23);
+		anvilPanel.add(forgeButton);
+
+		JPanel craftPanel = new JPanel();
+		tabbedPane.addTab("Crafting", null, craftPanel, null);
+		craftPanel.setLayout(null);
+
+		final JComboBox<ItemType> craftCombo = new JComboBox<ItemType>();
+		craftCombo.setModel(new DefaultComboBoxModel<ItemType>(ItemType.values()));
+		craftCombo.setBounds(10, 12, 270, 20);
+		craftPanel.add(craftCombo);
+
+		JButton craftButton = new JButton("Craft");
+		craftButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RecipeManager.craft(craftCombo.getItemAt(craftCombo.getSelectedIndex()));
+				updateInv(invDisplay);
+			}
+		});
 		craftButton.setBounds(290, 11, 89, 23);
-		anvilPanel.add(craftButton);
+		craftPanel.add(craftButton);
 
 		JPanel finishingPanel = new JPanel();
 		tabbedPane.addTab("Finishing Table", null, finishingPanel, null);

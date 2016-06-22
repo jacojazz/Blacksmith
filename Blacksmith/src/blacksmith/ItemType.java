@@ -24,12 +24,30 @@ public enum ItemType {
 	SHORTSWORD("Shortsword", ItemGroup.EQUIPMENT),
 	SPEAR("Spear", ItemGroup.EQUIPMENT),
 
+	// TOOLS
+	PICKAXE("Pickaxe", ItemGroup.TOOLS),
+	MININGDRILL("Mining Drill", ItemGroup.TOOLS),
+
+	// ELECTRONICS
+	COPPERWIRE("Copper Wire", ItemGroup.ELECTRONICS),
+	INSULATEDWIRE("Insulated Wire", ItemGroup.ELECTRONICS),
+	PCB("Printed Circuit Board", ItemGroup.ELECTRONICS),
+	CAPACITOR("Capacitor", ItemGroup.ELECTRONICS),
+	PROCESSOR("Processor", ItemGroup.ELECTRONICS),
+	SILICON("Silicon", ItemGroup.ELECTRONICS),
+	LOGICGATE("Logic Gates", ItemGroup.ELECTRONICS),
+	COMPUTER("Computer", ItemGroup.ELECTRONICS),
+	BATTERY("Battery", ItemGroup.ELECTRONICS),
+
 	// SUPPLIES
 	LOG("Log", ItemGroup.SUPPLIES),
 	STONE("Stone", ItemGroup.SUPPLIES),
 	STRING("String", ItemGroup.SUPPLIES),
 	FEATHER("Feather", ItemGroup.SUPPLIES),
 	FLINT("Flint", ItemGroup.SUPPLIES),
+	RUBBER("Rubber", ItemGroup.SUPPLIES),
+	SAND("Sand", ItemGroup.SUPPLIES),
+	GLASS("Glass", ItemGroup.SUPPLIES),
 
 	// ORE
 	ADAMANTITEORE("Adamantite Ore", ItemGroup.ORE),

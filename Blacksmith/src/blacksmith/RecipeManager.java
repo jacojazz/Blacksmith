@@ -80,6 +80,24 @@ public class RecipeManager {
 			return;
 		case XENOTINEBAR:
 			return;
+		case RUBBER:
+			if (Inventory.checkAndRemove(new QuantifiedItem(ItemType.LOG, 10))) {
+				break;
+			} else {
+				return;
+			}
+		case GLASS:
+			if (Inventory.checkAndRemove(new Item(ItemType.SAND))) {
+				break;
+			} else {
+				return;
+			}
+		case SILICON:
+			if (Inventory.checkAndRemove(new Item(ItemType.GLASS))) {
+				break;
+			} else {
+				return;
+			}
 		default:
 			System.err.println(Messages.getString("RecipeManager.furnace.switch"));
 			return;
@@ -127,12 +145,6 @@ public class RecipeManager {
 			}
 		case DAGGER:
 			if (Inventory.checkAndRemove(new Item(ITEM_TIER.getResource()))) {
-				break;
-			} else {
-				return;
-			}
-		case DIAMOND:
-			if (Inventory.checkAndRemove(new Item(ItemType.DIAMONDORE))) {
 				break;
 			} else {
 				return;
@@ -190,5 +202,32 @@ public class RecipeManager {
 			return;
 		}
 		Inventory.add(new Item(ITEM_TYPE, ITEM_TIER, ItemState.UNFINISHED));
+	}
+
+	public static void craft(ItemType ITEM_TYPE) {
+		switch (ITEM_TYPE) {
+		case DIAMOND:
+			if (Inventory.checkAndRemove(new Item(ItemType.DIAMONDORE))) {
+				break;
+			} else {
+				return;
+			}
+		case COPPERWIRE:
+			if (Inventory.checkAndRemove(new Item(ItemType.COPPERBAR))) {
+				break;
+			} else {
+				return;
+			}
+		case INSULATEDWIRE:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.COPPERWIRE), new Item(ItemType.RUBBER))))) {
+				break;
+			} else {
+				return;
+			}
+		default:
+			System.err.println(Messages.getString("RecipeManager.craft.switch"));
+			break;
+		}
+		Inventory.add(new Item(ITEM_TYPE));
 	}
 }
