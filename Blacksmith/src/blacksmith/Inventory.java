@@ -1,25 +1,10 @@
 package blacksmith;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 
 public class Inventory {
 	private static ArrayList<Item> inv = new ArrayList<Item>();
-
-	public static void sort() {
-		QtoICheck();
-		Collections.sort(inv, new Comparator<Item>() {
-			public int compare(Item i1, Item i2) {
-				if (i1.getType() == i2.getType()) {
-					return 0;
-				} else {
-					return 1;
-				}
-			}
-		});
-	}
 
 	public static void add(Item i) {
 		if (inv.isEmpty()) {

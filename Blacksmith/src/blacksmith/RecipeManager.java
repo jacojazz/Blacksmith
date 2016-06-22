@@ -242,6 +242,18 @@ public class RecipeManager {
 			} else {
 				return;
 			}
+		case CAPACITOR:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.SILICON), new QuantifiedItem(ItemType.IRONBAR, 2), new QuantifiedItem(ItemType.INSULATEDWIRE, 2))))) {
+				break;
+			} else {
+				return;
+			}
+		case PCB:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new QuantifiedItem(ItemType.SILICON, 8), new QuantifiedItem(ItemType.COPPERWIRE, 4))))) {
+				break;
+			} else {
+				return;
+			}
 		default:
 			System.err.println(Messages.getString("RecipeManager.craft.switch"));
 			break;

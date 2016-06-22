@@ -8,6 +8,10 @@ public class Item {
 	private ItemTier ITEM_TIER;
 	private ItemState ITEM_STATE;
 
+	Item() {
+		this(ItemType.NONE);
+	}
+
 	Item(ItemType ITEM_TYPE) {
 		this(ITEM_TYPE, ItemTier.NONE, ItemState.NONE);
 	}
