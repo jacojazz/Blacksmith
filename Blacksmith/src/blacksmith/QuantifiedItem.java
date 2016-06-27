@@ -8,6 +8,10 @@ public class QuantifiedItem extends Item {
 		this.QUANTITY = QUANTITY;
 	}
 
+	QuantifiedItem(Item ITEM, int QUANTITY) {
+		this(ITEM.getType(), ITEM.getTier(), ITEM.getState(), QUANTITY);
+	}
+
 	QuantifiedItem(ItemType ITEM_TYPE, ItemTier ITEM_TIER, ItemState ITEM_STATE, int QUANTITY) {
 		super(ITEM_TYPE, ITEM_TIER, ITEM_STATE);
 		this.QUANTITY = QUANTITY;

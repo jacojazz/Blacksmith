@@ -33,7 +33,7 @@ public class Market {
 		for (Iterator<MarketListing> listingsIterator = listings.iterator(); listingsIterator.hasNext();) {
 			MarketListing temp = listingsIterator.next();
 			if (temp.compare(listing)) {
-				Inventory.add(temp.getItem());
+				Inventory.add(new QuantifiedItem(temp.getItem(), temp.getQuantity()));
 				listingsIterator.remove();
 			}
 		}
