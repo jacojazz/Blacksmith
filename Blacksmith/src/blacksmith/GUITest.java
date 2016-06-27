@@ -27,6 +27,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableModel;
+
+import blacksmith.utils.Messages;
 
 public class GUITest extends JFrame {
 
@@ -57,7 +60,7 @@ public class GUITest extends JFrame {
 	}
 
 	public GUITest() {
-		super("Blacksmith");
+		super(Messages.getString("Blacksmith.name"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 
@@ -82,7 +85,7 @@ public class GUITest extends JFrame {
 		contentPane.add(invDisplay);
 
 		JPopupMenu popupMenu = new JPopupMenu();
-		JMenuItem removeInv = new JMenuItem("Remove from Inv");
+		JMenuItem removeInv = new JMenuItem(Messages.getString("Blacksmith.invRemove"));
 		removeInv.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Inventory.checkAndRemove(invDisplay.getSelectedValue());
@@ -98,22 +101,64 @@ public class GUITest extends JFrame {
 		contentPane.add(tabbedPane);
 
 		JPanel marketPanel = new JPanel();
-		tabbedPane.addTab("Market", null, marketPanel, null);
+		tabbedPane.addTab(Messages.getString("Blacksmith.market"), null, marketPanel, null);
 		marketPanel.setLayout(null);
 
 		JScrollPane marketScrollPane = new JScrollPane();
-		marketScrollPane.setBounds(12, 13, 365, 361);
+		marketScrollPane.setBounds(12, 13, 365, 300);
 		marketPanel.add(marketScrollPane);
 
-		marketTable = new JTable(Market.getTableData());
-		marketTable.setShowGrid(false);
+		marketTable = new JTable(Market.getTableData()) {
+			private static final long serialVersionUID = -2575164177251838224L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				if (column == 3) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			@Override
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return Integer.class;
+				case 2:
+					return Integer.class;
+				case 3:
+					return Boolean.class;
+				default:
+					return null;
+				}
+			}
+		};
 		marketTable.setShowVerticalLines(false);
 		marketTable.setRowSelectionAllowed(false);
 		marketTable.setFillsViewportHeight(true);
 		marketScrollPane.setViewportView(marketTable);
 
+		JButton buySelected = new JButton(Messages.getString("Blacksmith.buySelected"));
+		buySelected.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TableModel tm = marketTable.getModel();
+				for (int i = 0; i < tm.getRowCount(); i++) {
+					if ((Boolean) tm.getValueAt(i, 3) == true) {
+						MarketListing listing = new MarketListing((Item) tm.getValueAt(i, 0), (Integer) tm.getValueAt(i, 1), (Integer) tm.getValueAt(i, 2));
+						Market.removeListing(listing, true);
+						marketTable.setModel(Market.getTableData());
+					}
+				}
+			}
+		});
+		buySelected.setBounds(142, 326, 105, 25);
+		marketPanel.add(buySelected);
+
 		JPanel furnacePanel = new JPanel();
-		tabbedPane.addTab("Furnace", null, furnacePanel, null);
+		tabbedPane.addTab(Messages.getString("Blacksmith.furnace"), null, furnacePanel, null);
 		furnacePanel.setLayout(null);
 
 		final JComboBox<ItemType> smeltCombo = new JComboBox<ItemType>();
@@ -121,7 +166,7 @@ public class GUITest extends JFrame {
 		smeltCombo.setBounds(10, 12, 270, 20);
 		furnacePanel.add(smeltCombo);
 
-		JButton smeltButton = new JButton("Smelt");
+		JButton smeltButton = new JButton(Messages.getString("Blacksmith.smelt"));
 		smeltButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RecipeManager.furnace(smeltCombo.getItemAt(smeltCombo.getSelectedIndex()));
@@ -132,7 +177,7 @@ public class GUITest extends JFrame {
 		furnacePanel.add(smeltButton);
 
 		JPanel anvilPanel = new JPanel();
-		tabbedPane.addTab("Anvil", null, anvilPanel, null);
+		tabbedPane.addTab(Messages.getString("Blacksmith.anvil"), null, anvilPanel, null);
 		anvilPanel.setLayout(null);
 
 		final JComboBox<ItemType> anvilTypeCombo = new JComboBox<ItemType>();
@@ -145,7 +190,7 @@ public class GUITest extends JFrame {
 		anvilTierCombo.setBounds(145, 12, 125, 20);
 		anvilPanel.add(anvilTierCombo);
 
-		JButton forgeButton = new JButton("Forge");
+		JButton forgeButton = new JButton(Messages.getString("Blacksmith.forge"));
 		forgeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RecipeManager.anvil(anvilTypeCombo.getItemAt(anvilTypeCombo.getSelectedIndex()), anvilTierCombo.getItemAt(anvilTierCombo.getSelectedIndex()));
@@ -156,7 +201,7 @@ public class GUITest extends JFrame {
 		anvilPanel.add(forgeButton);
 
 		JPanel craftPanel = new JPanel();
-		tabbedPane.addTab("Crafting", null, craftPanel, null);
+		tabbedPane.addTab(Messages.getString("Blacksmith.crafting"), null, craftPanel, null);
 		craftPanel.setLayout(null);
 
 		final JComboBox<ItemType> craftCombo = new JComboBox<ItemType>();
@@ -164,7 +209,7 @@ public class GUITest extends JFrame {
 		craftCombo.setBounds(10, 12, 270, 20);
 		craftPanel.add(craftCombo);
 
-		JButton craftButton = new JButton("Craft");
+		JButton craftButton = new JButton(Messages.getString("Blacksmith.craft"));
 		craftButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RecipeManager.craft(craftCombo.getItemAt(craftCombo.getSelectedIndex()));
@@ -175,15 +220,15 @@ public class GUITest extends JFrame {
 		craftPanel.add(craftButton);
 
 		JPanel finishingPanel = new JPanel();
-		tabbedPane.addTab("Finishing Table", null, finishingPanel, null);
+		tabbedPane.addTab(Messages.getString("Blacksmith.finishingTable"), null, finishingPanel, null);
 		finishingPanel.setLayout(null);
 
 		JPanel enchantingPanel = new JPanel();
-		tabbedPane.addTab("Enchanting Table", null, enchantingPanel, null);
+		tabbedPane.addTab(Messages.getString("Blacksmith.enchantingTable"), null, enchantingPanel, null);
 		enchantingPanel.setLayout(null);
 
 		JPanel adminPanel = new JPanel();
-		tabbedPane.addTab("Admin", null, adminPanel, null);
+		tabbedPane.addTab(Messages.getString("Blacksmith.admin"), null, adminPanel, null);
 		adminPanel.setLayout(null);
 
 		final JComboBox<ItemType> typeBox = new JComboBox<ItemType>();
@@ -201,49 +246,50 @@ public class GUITest extends JFrame {
 		stateBox.setBounds(266, 11, 100, 20);
 		adminPanel.add(stateBox);
 
-		JButton addButton = new JButton("Add to Inv");
-		addButton.setBounds(150, 42, 89, 23);
-		addButton.addActionListener(new ActionListener() {
+		JButton addInvButton = new JButton(Messages.getString("Blacksmith.invAdd"));
+		addInvButton.setBounds(150, 42, 89, 23);
+		addInvButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Inventory.add(new Item(typeBox.getItemAt(typeBox.getSelectedIndex()), tierBox.getItemAt(tierBox.getSelectedIndex()), stateBox.getItemAt(stateBox.getSelectedIndex())));
 				invDisplay.setListData(Inventory.getArray().toArray(new Item[Inventory.getArray().size()]));
 			}
 		});
-		adminPanel.add(addButton);
+		adminPanel.add(addInvButton);
 
-		JComboBox<ItemType> marketTypeBox = new JComboBox<ItemType>();
+		final JComboBox<ItemType> marketTypeBox = new JComboBox<ItemType>();
 		marketTypeBox.setModel(new DefaultComboBoxModel<ItemType>(ItemType.values()));
 		marketTypeBox.setBounds(22, 95, 100, 20);
 		adminPanel.add(marketTypeBox);
 
-		JComboBox<ItemTier> marketTierBox = new JComboBox<ItemTier>();
+		final JComboBox<ItemTier> marketTierBox = new JComboBox<ItemTier>();
 		marketTierBox.setModel(new DefaultComboBoxModel<ItemTier>(ItemTier.values()));
 		marketTierBox.setBounds(144, 95, 100, 20);
 		adminPanel.add(marketTierBox);
 
-		JComboBox<ItemState> marketStateBox = new JComboBox<ItemState>();
+		final JComboBox<ItemState> marketStateBox = new JComboBox<ItemState>();
 		marketStateBox.setModel(new DefaultComboBoxModel<ItemState>(ItemState.values()));
 		marketStateBox.setBounds(266, 95, 100, 20);
 		adminPanel.add(marketStateBox);
 
-		JSlider marketQuantitySlider = new JSlider();
+		final JSlider marketQuantitySlider = new JSlider();
 		marketQuantitySlider.setMinimum(1);
 		marketQuantitySlider.setBounds(22, 128, 344, 23);
 		adminPanel.add(marketQuantitySlider);
 
-		JSlider marketPriceSlider = new JSlider();
+		final JSlider marketPriceSlider = new JSlider();
 		marketPriceSlider.setMinimum(1);
 		marketPriceSlider.setBounds(22, 164, 344, 23);
 		adminPanel.add(marketPriceSlider);
 
-		JButton btnAddToMarket = new JButton("Add to Market");
-		btnAddToMarket.addActionListener(new ActionListener() {
+		JButton addMarketButton = new JButton(Messages.getString("Blacksmith.marketAdd"));
+		addMarketButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				Market.addListing(new Item(marketTypeBox.getItemAt(marketTypeBox.getSelectedIndex()), marketTierBox.getItemAt(marketTierBox.getSelectedIndex()), marketStateBox.getItemAt(marketStateBox.getSelectedIndex())), marketQuantitySlider.getValue(), marketPriceSlider.getValue());
+				marketTable.setModel(Market.getTableData());
 			}
 		});
-		btnAddToMarket.setBounds(94, 200, 200, 23);
-		adminPanel.add(btnAddToMarket);
+		addMarketButton.setBounds(94, 200, 200, 23);
+		adminPanel.add(addMarketButton);
 
 	}
 

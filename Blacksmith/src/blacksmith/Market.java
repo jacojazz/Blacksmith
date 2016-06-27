@@ -20,4 +20,22 @@ public class Market {
 		}
 		return tm;
 	}
+
+	public static void addListing(Item item, int quantity, int price) {
+		listings.add(new MarketListing(item, quantity, price));
+	}
+
+	public static void removeListing(MarketListing listing, boolean takeCoins) {
+		if (takeCoins) {
+			User.setCoins(User.getCoins() - listing.getPrice());
+		}
+
+		for (Iterator<MarketListing> listingsIterator = listings.iterator(); listingsIterator.hasNext();) {
+			MarketListing temp = listingsIterator.next();
+			if (temp.compare(listing)) {
+				Inventory.add(temp.getItem());
+				listingsIterator.remove();
+			}
+		}
+	}
 }

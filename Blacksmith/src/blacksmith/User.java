@@ -1,9 +1,10 @@
 package blacksmith;
 
 public class User {
-	public static int level = 0;
-	public static int xp = 0;
+	private static int level = 0;
+	private static int xp = 0;
 	private static int xpPerLevel = 1000;
+	private static int coins = 2000;
 
 	private static Item equippedTool;
 
@@ -39,5 +40,13 @@ public class User {
 
 	public static Item getEquippedTool() {
 		return equippedTool;
+	}
+
+	public static int getCoins() {
+		return coins;
+	}
+
+	public static void setCoins(int coins) {
+		User.coins = coins;
 	}
 }

@@ -1,7 +1,5 @@
 package blacksmith;
 
-import javax.swing.JButton;
-
 public class MarketListing {
 	private Item item;
 	private int quantity;
@@ -13,7 +11,35 @@ public class MarketListing {
 		this.price = p;
 	}
 
+	public boolean compare(MarketListing listing) {
+		if (listing.getItem() == this.getItem() && listing.getQuantity() == this.getQuantity() && listing.getPrice() == this.getPrice()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public Object[] getRow() {
-		return new Object[] { item, quantity, price, new JButton("Buy") };
+		return new Object[] { item, quantity, price, false };
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getPrice() {
+		return price;
 	}
 }
