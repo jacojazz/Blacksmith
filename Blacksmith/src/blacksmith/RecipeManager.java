@@ -12,6 +12,12 @@ public class RecipeManager {
 			} else {
 				return;
 			}
+		case BRASSBAR:
+			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.COPPERORE), new Item(ItemType.ZINCORE))))) {
+				break;
+			} else {
+				return;
+			}
 		case BRONZEBAR:
 			if (Inventory.checkAndRemove(new ArrayList<Item>(Arrays.asList(new Item(ItemType.COPPERORE), new Item(ItemType.TINORE))))) {
 				break;
@@ -103,6 +109,7 @@ public class RecipeManager {
 			return;
 		}
 		Inventory.add(new Item(ITEM_TYPE));
+		User.addXP(10);
 	}
 
 	public static void anvil(ItemType ITEM_TYPE, ItemTier ITEM_TIER) {

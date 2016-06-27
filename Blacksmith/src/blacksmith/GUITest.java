@@ -19,7 +19,10 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -30,6 +33,7 @@ public class GUITest extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private HashMap<String, Image> res = new HashMap<String, Image>();
+	private JTable marketTable;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -92,6 +96,21 @@ public class GUITest extends JFrame {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setBounds(220, 13, 394, 417);
 		contentPane.add(tabbedPane);
+
+		JPanel marketPanel = new JPanel();
+		tabbedPane.addTab("Market", null, marketPanel, null);
+		marketPanel.setLayout(null);
+
+		JScrollPane marketScrollPane = new JScrollPane();
+		marketScrollPane.setBounds(12, 13, 365, 361);
+		marketPanel.add(marketScrollPane);
+
+		marketTable = new JTable(Market.getTableData());
+		marketTable.setShowGrid(false);
+		marketTable.setShowVerticalLines(false);
+		marketTable.setRowSelectionAllowed(false);
+		marketTable.setFillsViewportHeight(true);
+		marketScrollPane.setViewportView(marketTable);
 
 		JPanel furnacePanel = new JPanel();
 		tabbedPane.addTab("Furnace", null, furnacePanel, null);
@@ -184,13 +203,48 @@ public class GUITest extends JFrame {
 
 		JButton addButton = new JButton("Add to Inv");
 		addButton.setBounds(150, 42, 89, 23);
-		adminPanel.add(addButton);
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Inventory.add(new Item(typeBox.getItemAt(typeBox.getSelectedIndex()), tierBox.getItemAt(tierBox.getSelectedIndex()), stateBox.getItemAt(stateBox.getSelectedIndex())));
 				invDisplay.setListData(Inventory.getArray().toArray(new Item[Inventory.getArray().size()]));
 			}
 		});
+		adminPanel.add(addButton);
+
+		JComboBox<ItemType> marketTypeBox = new JComboBox<ItemType>();
+		marketTypeBox.setModel(new DefaultComboBoxModel<ItemType>(ItemType.values()));
+		marketTypeBox.setBounds(22, 95, 100, 20);
+		adminPanel.add(marketTypeBox);
+
+		JComboBox<ItemTier> marketTierBox = new JComboBox<ItemTier>();
+		marketTierBox.setModel(new DefaultComboBoxModel<ItemTier>(ItemTier.values()));
+		marketTierBox.setBounds(144, 95, 100, 20);
+		adminPanel.add(marketTierBox);
+
+		JComboBox<ItemState> marketStateBox = new JComboBox<ItemState>();
+		marketStateBox.setModel(new DefaultComboBoxModel<ItemState>(ItemState.values()));
+		marketStateBox.setBounds(266, 95, 100, 20);
+		adminPanel.add(marketStateBox);
+
+		JSlider marketQuantitySlider = new JSlider();
+		marketQuantitySlider.setMinimum(1);
+		marketQuantitySlider.setBounds(22, 128, 344, 23);
+		adminPanel.add(marketQuantitySlider);
+
+		JSlider marketPriceSlider = new JSlider();
+		marketPriceSlider.setMinimum(1);
+		marketPriceSlider.setBounds(22, 164, 344, 23);
+		adminPanel.add(marketPriceSlider);
+
+		JButton btnAddToMarket = new JButton("Add to Market");
+		btnAddToMarket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		btnAddToMarket.setBounds(94, 200, 200, 23);
+		adminPanel.add(btnAddToMarket);
+
 	}
 
 	private static void updateInv(JList<Item> inv) {

@@ -24,7 +24,11 @@ public class User {
 	}
 
 	public static void addXP(int xp) {
-		User.xp += xp;
+		if (User.xp + xp > xpPerLevel) {
+			int difference = xpPerLevel - User.xp;
+			User.xp = xp - difference;
+			User.level++;
+		}
 	}
 
 	public static void equipTool(Item i) {
