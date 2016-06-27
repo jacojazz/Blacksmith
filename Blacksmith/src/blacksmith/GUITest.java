@@ -42,6 +42,7 @@ public class GUITest extends JFrame {
 	}
 
 	public GUITest() {
+		super("Blacksmith");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		try {
