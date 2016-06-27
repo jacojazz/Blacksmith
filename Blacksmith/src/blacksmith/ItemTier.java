@@ -1,6 +1,8 @@
 package blacksmith;
 
 public enum ItemTier {
+	// TYPES
+
 	NONE(ItemType.NONE),
 	WOODEN(ItemType.LOG),
 	STONE(ItemType.STONE),

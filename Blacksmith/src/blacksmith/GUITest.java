@@ -2,11 +2,13 @@ package blacksmith;
 
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
@@ -27,6 +29,7 @@ public class GUITest extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private HashMap<String, Image> res = new HashMap<String, Image>();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,15 +44,22 @@ public class GUITest extends JFrame {
 		});
 	}
 
+	private void resourceLoad() {
+		try {
+			res.put("mainIcon", ImageIO.read(getClass().getResource("icon.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public GUITest() {
 		super("Blacksmith");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		try {
-			setIconImage(ImageIO.read(getClass().getResource("icon.png")));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+
+		resourceLoad();
+
+		setIconImage(res.get("mainIcon"));
 		setBounds(100, 100, 640, 480);
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -88,7 +98,7 @@ public class GUITest extends JFrame {
 		furnacePanel.setLayout(null);
 
 		final JComboBox<ItemType> smeltCombo = new JComboBox<ItemType>();
-		smeltCombo.setModel(new DefaultComboBoxModel<ItemType>(ItemType.values()));
+		smeltCombo.setModel(new DefaultComboBoxModel<ItemType>(ItemType.getSubArrayFromCraftable(Craftable.FURNACE)));
 		smeltCombo.setBounds(10, 12, 270, 20);
 		furnacePanel.add(smeltCombo);
 
@@ -107,7 +117,7 @@ public class GUITest extends JFrame {
 		anvilPanel.setLayout(null);
 
 		final JComboBox<ItemType> anvilTypeCombo = new JComboBox<ItemType>();
-		anvilTypeCombo.setModel(new DefaultComboBoxModel<ItemType>(ItemType.values()));
+		anvilTypeCombo.setModel(new DefaultComboBoxModel<ItemType>(ItemType.getSubArrayFromCraftable(Craftable.ANVIL)));
 		anvilTypeCombo.setBounds(10, 12, 125, 20);
 		anvilPanel.add(anvilTypeCombo);
 
@@ -131,7 +141,7 @@ public class GUITest extends JFrame {
 		craftPanel.setLayout(null);
 
 		final JComboBox<ItemType> craftCombo = new JComboBox<ItemType>();
-		craftCombo.setModel(new DefaultComboBoxModel<ItemType>(ItemType.values()));
+		craftCombo.setModel(new DefaultComboBoxModel<ItemType>(ItemType.getSubArrayFromCraftable(Craftable.CRAFTINGTABLE)));
 		craftCombo.setBounds(10, 12, 270, 20);
 		craftPanel.add(craftCombo);
 

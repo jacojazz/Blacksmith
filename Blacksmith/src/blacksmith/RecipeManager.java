@@ -179,6 +179,12 @@ public class RecipeManager {
 			} else {
 				return;
 			}
+		case SAND:
+			if (Inventory.checkAndRemove(new Item(ItemType.STONE))) {
+				break;
+			} else {
+				return;
+			}
 		case SHIELD:
 			if (Inventory.checkAndRemove(new QuantifiedItem(ITEM_TIER.getResource(), 5))) {
 				break;
