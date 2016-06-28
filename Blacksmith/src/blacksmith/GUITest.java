@@ -115,7 +115,7 @@ public class GUITest extends JFrame {
 		});
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
 		tabbedPane.setBounds(220, 13, 394, 417);
 		contentPane.add(tabbedPane);
 
@@ -159,9 +159,9 @@ public class GUITest extends JFrame {
 		marketTable.setFillsViewportHeight(true);
 		marketScrollPane.setViewportView(marketTable);
 
-		final JLabel coinsLabel = new JLabel("Coins: " + User.getCoins());
+		final JLabel coinsLabel = new JLabel(Messages.getString("Blacksmith.coinsValue") + User.getCoins()); //$NON-NLS-1$
 		coinsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		coinsLabel.setBounds(17, 364, 355, 14);
+		coinsLabel.setBounds(17, 356, 355, 14);
 		marketPanel.add(coinsLabel);
 
 		JButton buySelected = new JButton(Messages.getString("Blacksmith.buySelected")); //$NON-NLS-1$
@@ -173,7 +173,8 @@ public class GUITest extends JFrame {
 						MarketListing listing = new MarketListing((Item) tm.getValueAt(i, 0), (Integer) tm.getValueAt(i, 1), (Integer) tm.getValueAt(i, 2));
 						Market.removeListing(listing, true);
 						marketTable.setModel(Market.getTableData());
-						coinsLabel.setText("Coins: " + User.getCoins());
+						coinsLabel.setText(Messages.getString("Blacksmith.coinsValue") + User.getCoins()); //$NON-NLS-1$
+						updateInv(invDisplay);
 					}
 				}
 			}
