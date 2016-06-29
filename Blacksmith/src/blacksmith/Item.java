@@ -39,8 +39,8 @@ public class Item {
 		return ITEM_STATE;
 	}
 
-	public void setState(ItemState iTEM_STATE) {
-		ITEM_STATE = iTEM_STATE;
+	public void setState(ItemState ITEM_STATE) {
+		this.ITEM_STATE = ITEM_STATE;
 	}
 
 	public boolean itemCompare(Item i) {
@@ -54,7 +54,7 @@ public class Item {
 	@Override
 	public String toString() {
 		if (ITEM_TIER != ItemTier.NONE) {
-			return ITEM_TYPE.getFormattedName() + " (" + ITEM_TIER.getResource().getFormattedName() + ")";
+			return ITEM_TYPE.getFormattedName() + " (" + ITEM_TIER.getResource().getFormattedName() + ")" + " (" + ITEM_STATE.name().substring(0, 1) + ")";
 		} else {
 			return ITEM_TYPE.getFormattedName();
 		}
